@@ -1,35 +1,44 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
-export const RoleContext = createContext();
+const RoleContext = createContext();
 
-export const RoleProvider = ({ children }) => {
-  const [userRole, setUserRole] = useState(null);
+export function RoleProvider({ children }) {
+  const [userRole, setUserRole] = useState(() => {
+    return localStorage.getItem('userRole') || null;
+  });
   
-  useEffect(() => {
-    // Check if there's a stored user role on component mount
-    const userData = localStorage.getItem("userData");
-    if (userData) {
-      try {
-        const parsedData = JSON.parse(userData);
-        setUserRole(parsedData.Role || "user");
-      } catch (error) {
-        console.error("Error parsing stored user data:", error);
-      }
-    }
-  }, []);
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
+
   const login = (role) => {
     setUserRole(role);
+    setIsLoggedIn(true);
+    localStorage.setItem('userRole', role);
+    localStorage.setItem('isLoggedIn', 'true');
   };
-  
+
   const logout = () => {
     setUserRole(null);
-    localStorage.removeItem("userData");
+    setIsLoggedIn(false);
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = '/';
   };
-  
+
   return (
-    <RoleContext.Provider value={{ userRole, login, logout }}>
+    <RoleContext.Provider value={{ userRole, isLoggedIn, login, logout }}>
       {children}
     </RoleContext.Provider>
   );
-}; 
+}
+
+export function useRole() {
+  const context = useContext(RoleContext);
+  if (context === undefined) {
+    throw new Error('useRole must be used within a RoleProvider');
+  }
+  return context;
+}
+
+export { RoleContext }; 

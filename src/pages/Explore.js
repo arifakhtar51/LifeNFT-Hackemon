@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NFTCard from '../components/NFTCard';
+import { motion } from 'framer-motion';
+import Chat from '../components/Chat';
 
 // Blood donation themed NFT data
 const allNFTs = [
@@ -11,7 +13,10 @@ const allNFTs = [
     image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
     price: "2.0 ETH",
     isVerified: true,
-    category: "Blood Donation"
+    category: "Blood Donation",
+    donorName: "John Smith",
+    bloodType: "A+",
+    location: "New York"
   },
   {
     id: 2,
@@ -21,7 +26,10 @@ const allNFTs = [
     image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
     price: "1.5 ETH",
     isVerified: true,
-    category: "Blood Donation"
+    category: "Blood Donation",
+    donorName: "Sarah Johnson",
+    bloodType: "O-",
+    location: "Los Angeles"
   },
   {
     id: 3,
@@ -31,7 +39,10 @@ const allNFTs = [
     image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
     price: "3.0 ETH",
     isVerified: true,
-    category: "Blood Donation"
+    category: "Blood Donation",
+    donorName: "Michael Brown",
+    bloodType: "B+",
+    location: "Chicago"
   },
   {
     id: 4,
@@ -121,6 +132,10 @@ export function Explore() {
   // State for donation requests/posts
   const [donationRequests, setDonationRequests] = useState(initialRequests);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
+  // New states for chat
+  const [selectedDonor, setSelectedDonor] = useState(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Simulated loading state - shorter for better UX
   useEffect(() => {
@@ -243,6 +258,11 @@ export function Explore() {
       hour: '2-digit', 
       minute: '2-digit' 
     });
+  };
+
+  const handleContactDonor = (donor) => {
+    setSelectedDonor(donor);
+    setIsChatOpen(true);
   };
 
   if (isLoading) {
@@ -445,7 +465,48 @@ export function Explore() {
             "flex flex-col gap-6"
           }>
             {filteredNFTs.map((nft) => (
-              <NFTCard key={nft.id} nft={nft} />
+              <motion.div
+                key={nft.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="modern-card"
+              >
+                <div className="relative h-48 overflow-hidden rounded-t-lg">
+                  <img
+                    src={nft.image}
+                    alt={nft.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{nft.name}</h3>
+                  <p className="text-slate-400 mb-4">{nft.description}</p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Donor</span>
+                      <span className="font-medium">{nft.donorName}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Blood Type</span>
+                      <span className="font-medium">{nft.bloodType}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Location</span>
+                      <span className="font-medium">{nft.location}</span>
+                    </div>
+                  </div>
+                  <div className="mt-6 flex justify-between items-center">
+                    <span className="text-2xl font-bold text-gradient">{nft.price}</span>
+                    <button
+                      onClick={() => handleContactDonor(nft.donorName)}
+                      className="modern-button"
+                    >
+                      Contact Donor
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         ) : (
@@ -529,7 +590,7 @@ export function Explore() {
                   <div className="flex justify-end">
                     <button 
                       className="bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-medium py-2 px-4 rounded transition-all"
-                      onClick={() => alert(`Contact initiated with ${request.author} for ${request.bloodGroup} blood donation.`)}
+                      onClick={() => handleContactDonor(request.author)}
                     >
                       Contact Donor
                     </button>
@@ -721,6 +782,13 @@ export function Explore() {
           </div>
         </div>
       )}
+
+      {/* Chat Component */}
+      <Chat
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        donorName={selectedDonor}
+      />
     </div>
   );
 }
