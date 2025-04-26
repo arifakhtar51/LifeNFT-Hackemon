@@ -39,6 +39,20 @@ BloodDonorNFT fully utilizes the **Hive blockchain** for:
 ![GyaanFT Interface](/photos/gyaanft1.png)
 *Detailed view of the GyaanFT educational platform interface*
 
+## GyaanFT Project
+
+GyaanFT is an educational platform integrated with our ecosystem, focusing on knowledge sharing and learning through blockchain technology.
+
+### GyaanFT Screenshots
+
+#### Main Platform View
+![GyaanFT Platform](/photos/GyaanFT2.png)
+*The main interface of GyaanFT showcasing its educational features and user dashboard*
+
+#### LifeNFT Integration
+![LifeNFT Integration](/photos/LifeNFT1.png)
+*Integration between LifeNFT and GyaanFT platforms, demonstrating seamless user experience*
+
 ## Features
 - **Multi-Role System** – Separate dashboards for **government agencies, hospitals, and blood donors**
 - **Blockchain Verification** – Transparent and secure recording of donation history on **Hive blockchain**
