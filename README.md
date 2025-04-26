@@ -1,23 +1,61 @@
-# LifeNFT - Blood Donation NFT Platform
+# BloodDonorNFT
 
-LifeNFT is a decentralized platform that tokenizes blood donations as NFTs on the Hive blockchain, creating a transparent and incentivized blood donation ecosystem.
+**BloodDonorNFT** is a **Hive blockchain-powered** platform that incentivizes blood donation by rewarding donors with unique NFTs. This project seamlessly integrates **HiveAuth, Hive blockchain data reading, and Hive transaction broadcasting**, ensuring a **secure, decentralized, and transparent** blood donation ecosystem.
+
+## Overview
+BloodDonorNFT addresses the global challenge of blood shortages by leveraging **Hive blockchain** for immutable donation verification and NFT-based rewards. Hospitals validate donations, and donors receive **Hive-backed digital certificates (NFTs)** that can later be redeemed for benefits.
+
+## Hive Blockchain Integration
+
+BloodDonorNFT fully utilizes the **Hive blockchain** for:
+
+**HiveAuth Authentication** – Secure, decentralized login for users
+**Hive Blockchain Data Read** – Real-time retrieval of donation records and verification status
+**Hive Transaction Broadcasting** – Trustless and transparent recording of donation events on-chain
+
+## Screenshots
+
+### Home Page
+![Home Page](/photos/img1.png)
+
+### User Dashboard
+![User Dashboard](/photos/img2.png)
+
+### Hospital Dashboard
+![Hospital Dashboard](/photos/img3.png)
 
 ## Features
+- **Multi-Role System** – Separate dashboards for **government agencies, hospitals, and blood donors**
+- **Blockchain Verification** – Transparent and secure recording of donation history on **Hive blockchain**
+- **NFT Rewards** – Donors receive **Hive-based digital certificates** as NFTs
+- **Donation Tracking** – Complete donation history stored and verified via **Hive blockchain**
+- **Hospital Management** – Government agencies can **approve and oversee hospitals**
+- **Mobile Responsive** – Fully optimized for all devices
 
-- **Blood Donation NFTs**: Mint unique NFTs for blood donations
-- **Hospital Dashboard**: Manage donations and mint NFTs
-- **User Dashboard**: View and manage your blood donation NFTs
-- **Government Dashboard**: Oversee and verify hospitals
-- **Hive Blockchain Integration**: Secure and transparent transactions
-- **Blood Type Tracking**: Track different blood types and their availability
+## Technology Stack
+- **Frontend**: React.js with React Router
+- **Styling**: Tailwind CSS with custom animations
+- **UI Components**: Custom-built, mobile-friendly design
+- **Authentication**: **HiveAuth-based authentication** for secure access
+- **Blockchain**: **Hive blockchain for data integrity, NFT issuance, and transaction broadcasting**
+- **Visual Effects**: Modern UI with particle background
 
-## Tech Stack
+This project was developed as part of the **Hive Blockchain Hackathon**, demonstrating a real-world application of **Hive blockchain** in healthcare and donor incentivization. 🚀
 
-- React.js
-- Tailwind CSS
-- Hive Blockchain
-- Hive Keychain
-- Framer Motion
+## Revenue Model  
+
+LifeNFT adopts a sustainable revenue model while ensuring a decentralized and fair reward system for blood donors. Our revenue streams include:  
+
+- **Transaction Fees** – A small service fee is applied to transactions involving NFT rewards, verifications, and donor badge upgrades.  
+- **Premium Memberships** – Hospitals and blood banks can subscribe to premium plans for priority access to verified donor data and advanced analytics.  
+- **API Monetization** – Third-party applications, insurance providers, and healthcare platforms can integrate our open API for donor verification and blood donation records via a paid subscription model.  
+- **Sponsorships & Partnerships** – Collaborating with government health programs, NGOs, and private organizations to promote blood donation, where they contribute funds for platform development and maintenance.  
+- **NFT Marketplace** – A decentralized marketplace where donors can trade exclusive achievement-based NFTs, allowing organizations to sponsor special NFTs with unique perks.  
+- **AI-Powered Insights & Reports** – Offering AI-generated reports and donor behavior analytics to healthcare organizations for a subscription fee.  
+- **Tokenization & Staking** – Potential future implementation of a LifeNFT token, enabling staking mechanisms for users, providing incentives while generating platform revenue.  
+
+This model ensures financial sustainability while keeping the platform beneficial for donors, hospitals, and healthcare organizations.
+
 
 ## Getting Started
 
@@ -25,78 +63,61 @@ LifeNFT is a decentralized platform that tokenizes blood donations as NFTs on th
 
 - Node.js (v14 or higher)
 - npm or yarn
-- Hive Keychain browser extension
+- Hive Keychain wallet for NFT transactions
 
 ### Installation
 
 1. Clone the repository:
-```bash
-git clone https://github.com/arifakhtar51/LifeNFT-Hackemon.git
-cd LifeNFT-Hackemon
-```
+   ```bash
+   git clone https://github.com/ShadowSpark243/lifenft.git
+   cd lifenft
+   ```
 
 2. Install dependencies:
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
 3. Start the development server:
-```bash
-npm start
-```
+   ```bash
+   npm start
+   ```
 
-4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+4. The application will be available at `http://localhost:3000`
 
-## Project Structure
 
-```
-src/
-├── components/     # Reusable UI components
-├── contexts/       # React contexts for state management
-├── pages/         # Main application pages
-├── styles/        # Global styles and CSS
-└── utils/         # Utility functions and helpers
-```
+## User Roles
 
-## Usage
+### Government Agency
+- Approve and manage hospital registrations
+- View donation statistics and analytics
+- Configure system parameters
 
-### Hospital Dashboard
-- Connect to Hive blockchain
-- Add new blood donations
-- Verify donations
-- Mint NFTs for verified donations
+### Hospital
+- Verify blood donations
+- Issue NFT certificates to donors
+- Manage donation records
 
-### User Dashboard
-- View your blood donation NFTs
-- Track donation history
-- Verify NFT ownership
+### Blood Donor
+- Register and manage profile
+- View donation history
+- Redeem NFT rewards
 
-### Government Dashboard
-- Verify hospitals
-- Monitor donation activities
-- Track blood type availability
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+We welcome contributions to the BloodDonorNFT project. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to make contributions.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Hive Blockchain
-- Hive Keychain
-- React.js community
-- Tailwind CSS team
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Contact
 
-Arif Akhtar - [@arifakhtar51](https://github.com/arifakhtar51)
+- Email: shadowspark243@gmail.com
 
-Project Link: [https://github.com/arifakhtar51/LifeNFT-Hackemon](https://github.com/arifakhtar51/LifeNFT-Hackemon)
+## Acknowledgments
+
+- Blood donation centers worldwide for their invaluable service
+- The blockchain and NFT communities for inspiration
+- Our development team and early adopters
