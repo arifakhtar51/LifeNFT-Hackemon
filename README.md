@@ -17,12 +17,27 @@ BloodDonorNFT fully utilizes the **Hive blockchain** for:
 
 ### Home Page
 ![Home Page](/photos/img1.png)
+*The main landing page of BloodDonorNFT showcasing the platform's interface and features*
 
 ### User Dashboard
 ![User Dashboard](/photos/img2.png)
+*The donor's dashboard displaying donation history and NFT rewards*
 
 ### Hospital Dashboard
 ![Hospital Dashboard](/photos/img3.png)
+*The hospital interface for managing donations and verifying donors*
+
+### LifeNFT Platform
+![LifeNFT Platform](/photos/LifeNFT1.png)
+*Overview of the LifeNFT platform's main features and interface*
+
+### GyaanFT Integration
+![GyaanFT Integration](/photos/GyaanFT2.png)
+*Integration with GyaanFT showcasing educational aspects of the platform*
+
+### GyaanFT Interface
+![GyaanFT Interface](/photos/gyaanft1.png)
+*Detailed view of the GyaanFT educational platform interface*
 
 ## Features
 - **Multi-Role System** – Separate dashboards for **government agencies, hospitals, and blood donors**
