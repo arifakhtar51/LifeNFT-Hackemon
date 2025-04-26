@@ -76,7 +76,7 @@ const allNFTs = [
   }
 ];
 
-// Initial donation requests data
+// Initial donation requests data with duration
 const initialRequests = [
   {
     id: 1,
@@ -86,7 +86,9 @@ const initialRequests = [
     bloodGroup: "A+",
     date: "2025-03-09T14:30:00",
     location: "City Hospital",
-    isUrgent: true
+    isUrgent: true,
+    duration: 4, // Duration in hours
+    createdAt: new Date().toISOString()
   },
   {
     id: 2,
@@ -96,7 +98,9 @@ const initialRequests = [
     bloodGroup: "All",
     date: "2025-03-15T10:00:00",
     location: "Community Center",
-    isUrgent: false
+    isUrgent: false,
+    duration: 24, // Duration in hours
+    createdAt: new Date().toISOString()
   }
 ];
 
@@ -132,10 +136,14 @@ export function Explore() {
   // State for donation requests/posts
   const [donationRequests, setDonationRequests] = useState(initialRequests);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [requestDuration, setRequestDuration] = useState(4); // Default 4 hours
 
   // New states for chat
   const [selectedDonor, setSelectedDonor] = useState(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  // New state for timers
+  const [timers, setTimers] = useState({});
 
   // Simulated loading state - shorter for better UX
   useEffect(() => {
@@ -154,6 +162,69 @@ export function Explore() {
       return () => clearTimeout(timer);
     }
   }, [showSuccessAlert]);
+
+  // Function to check and remove expired requests
+  useEffect(() => {
+    const checkExpiredRequests = () => {
+      const now = new Date();
+      setDonationRequests(prevRequests => 
+        prevRequests.filter(request => {
+          const createdAt = new Date(request.createdAt);
+          const expirationTime = new Date(createdAt.getTime() + request.duration * 60 * 60 * 1000);
+          return now < expirationTime;
+        })
+      );
+    };
+
+    // Check every minute
+    const interval = setInterval(checkExpiredRequests, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Function to update timers
+  useEffect(() => {
+    const updateTimers = () => {
+      const now = new Date();
+      const newTimers = {};
+      
+      donationRequests.forEach(request => {
+        const createdAt = new Date(request.createdAt);
+        const expirationTime = new Date(createdAt.getTime() + request.duration * 60 * 60 * 1000);
+        const remainingTime = expirationTime - now;
+        
+        if (remainingTime > 0) {
+          const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+          const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+          
+          newTimers[request.id] = {
+            hours,
+            minutes,
+            seconds,
+            totalSeconds: Math.floor(remainingTime / 1000)
+          };
+        } else {
+          newTimers[request.id] = { hours: 0, minutes: 0, seconds: 0, totalSeconds: 0 };
+        }
+      });
+      
+      setTimers(newTimers);
+    };
+
+    // Update timers every second
+    const interval = setInterval(updateTimers, 1000);
+    return () => clearInterval(interval);
+  }, [donationRequests]);
+
+  // Function to format timer display
+  const formatTimer = (requestId) => {
+    const timer = timers[requestId];
+    if (!timer) return "Loading...";
+    
+    if (timer.totalSeconds <= 0) return "Expired";
+    
+    return `${timer.hours.toString().padStart(2, '0')}:${timer.minutes.toString().padStart(2, '0')}:${timer.seconds.toString().padStart(2, '0')}`;
+  };
 
   // Filter and sort NFTs
   const filteredNFTs = allNFTs
@@ -228,7 +299,9 @@ export function Explore() {
       location: location,
       isUrgent: isUrgent,
       email: userEmail,
-      phone: userPhone
+      phone: userPhone,
+      duration: requestDuration,
+      createdAt: new Date().toISOString()
     };
     
     // Add new request to the list
@@ -551,8 +624,13 @@ export function Explore() {
                         Posted by <span className="text-white">{request.author}</span> on {formatDate(request.date)}
                       </p>
                     </div>
-                    <div className="bg-slate-700 px-3 py-1 rounded text-white font-bold">
-                      {request.bloodGroup}
+                    <div className="flex flex-col items-end">
+                      <div className="bg-slate-700 px-3 py-1 rounded text-white font-bold mb-2">
+                        {request.bloodGroup}
+                      </div>
+                      <div className="text-sm text-slate-400">
+                        {formatTimer(request.id)}
+                      </div>
                     </div>
                   </div>
                   
@@ -762,6 +840,25 @@ export function Explore() {
                 <label htmlFor="urgentCheck" className="ml-2 text-sm font-medium text-slate-300">
                   Mark as urgent
                 </label>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1">Request Duration (hours)</label>
+                <select 
+                  className="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  value={requestDuration}
+                  onChange={(e) => setRequestDuration(Number(e.target.value))}
+                >
+                  <option value="1">1 hour</option>
+                  <option value="2">2 hours</option>
+                  <option value="4">4 hours</option>
+                  <option value="6">6 hours</option>
+                  <option value="12">12 hours</option>
+                  <option value="24">24 hours</option>
+                </select>
+                <p className="text-sm text-slate-400 mt-1">
+                  Request will be automatically removed after this duration
+                </p>
               </div>
             </div>
             
