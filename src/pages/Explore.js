@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import NFTCard from '../components/NFTCard';
-import { motion } from 'framer-motion';
-import Chat from '../components/Chat';
 
 // Blood donation themed NFT data
 const allNFTs = [
@@ -13,10 +11,7 @@ const allNFTs = [
     image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
     price: "2.0 ETH",
     isVerified: true,
-    category: "Blood Donation",
-    donorName: "John Smith",
-    bloodType: "A+",
-    location: "New York"
+    category: "Blood Donation"
   },
   {
     id: 2,
@@ -26,10 +21,7 @@ const allNFTs = [
     image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
     price: "1.5 ETH",
     isVerified: true,
-    category: "Blood Donation",
-    donorName: "Sarah Johnson",
-    bloodType: "O-",
-    location: "Los Angeles"
+    category: "Blood Donation"
   },
   {
     id: 3,
@@ -39,10 +31,7 @@ const allNFTs = [
     image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
     price: "3.0 ETH",
     isVerified: true,
-    category: "Blood Donation",
-    donorName: "Michael Brown",
-    bloodType: "B+",
-    location: "Chicago"
+    category: "Blood Donation"
   },
   {
     id: 4,
@@ -76,7 +65,7 @@ const allNFTs = [
   }
 ];
 
-// Initial donation requests data with duration
+// Initial donation requests data
 const initialRequests = [
   {
     id: 1,
@@ -86,9 +75,7 @@ const initialRequests = [
     bloodGroup: "A+",
     date: "2025-03-09T14:30:00",
     location: "City Hospital",
-    isUrgent: true,
-    duration: 4, // Duration in hours
-    createdAt: new Date().toISOString()
+    isUrgent: true
   },
   {
     id: 2,
@@ -98,9 +85,7 @@ const initialRequests = [
     bloodGroup: "All",
     date: "2025-03-15T10:00:00",
     location: "Community Center",
-    isUrgent: false,
-    duration: 24, // Duration in hours
-    createdAt: new Date().toISOString()
+    isUrgent: false
   }
 ];
 
@@ -136,14 +121,6 @@ export function Explore() {
   // State for donation requests/posts
   const [donationRequests, setDonationRequests] = useState(initialRequests);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [requestDuration, setRequestDuration] = useState(4); // Default 4 hours
-
-  // New states for chat
-  const [selectedDonor, setSelectedDonor] = useState(null);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
-  // New state for timers
-  const [timers, setTimers] = useState({});
 
   // Simulated loading state - shorter for better UX
   useEffect(() => {
@@ -162,69 +139,6 @@ export function Explore() {
       return () => clearTimeout(timer);
     }
   }, [showSuccessAlert]);
-
-  // Function to check and remove expired requests
-  useEffect(() => {
-    const checkExpiredRequests = () => {
-      const now = new Date();
-      setDonationRequests(prevRequests => 
-        prevRequests.filter(request => {
-          const createdAt = new Date(request.createdAt);
-          const expirationTime = new Date(createdAt.getTime() + request.duration * 60 * 60 * 1000);
-          return now < expirationTime;
-        })
-      );
-    };
-
-    // Check every minute
-    const interval = setInterval(checkExpiredRequests, 60000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Function to update timers
-  useEffect(() => {
-    const updateTimers = () => {
-      const now = new Date();
-      const newTimers = {};
-      
-      donationRequests.forEach(request => {
-        const createdAt = new Date(request.createdAt);
-        const expirationTime = new Date(createdAt.getTime() + request.duration * 60 * 60 * 1000);
-        const remainingTime = expirationTime - now;
-        
-        if (remainingTime > 0) {
-          const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-          const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-          
-          newTimers[request.id] = {
-            hours,
-            minutes,
-            seconds,
-            totalSeconds: Math.floor(remainingTime / 1000)
-          };
-        } else {
-          newTimers[request.id] = { hours: 0, minutes: 0, seconds: 0, totalSeconds: 0 };
-        }
-      });
-      
-      setTimers(newTimers);
-    };
-
-    // Update timers every second
-    const interval = setInterval(updateTimers, 1000);
-    return () => clearInterval(interval);
-  }, [donationRequests]);
-
-  // Function to format timer display
-  const formatTimer = (requestId) => {
-    const timer = timers[requestId];
-    if (!timer) return "Loading...";
-    
-    if (timer.totalSeconds <= 0) return "Expired";
-    
-    return `${timer.hours.toString().padStart(2, '0')}:${timer.minutes.toString().padStart(2, '0')}:${timer.seconds.toString().padStart(2, '0')}`;
-  };
 
   // Filter and sort NFTs
   const filteredNFTs = allNFTs
@@ -299,9 +213,7 @@ export function Explore() {
       location: location,
       isUrgent: isUrgent,
       email: userEmail,
-      phone: userPhone,
-      duration: requestDuration,
-      createdAt: new Date().toISOString()
+      phone: userPhone
     };
     
     // Add new request to the list
@@ -331,11 +243,6 @@ export function Explore() {
       hour: '2-digit', 
       minute: '2-digit' 
     });
-  };
-
-  const handleContactDonor = (donor) => {
-    setSelectedDonor(donor);
-    setIsChatOpen(true);
   };
 
   if (isLoading) {
@@ -538,48 +445,7 @@ export function Explore() {
             "flex flex-col gap-6"
           }>
             {filteredNFTs.map((nft) => (
-              <motion.div
-                key={nft.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="modern-card"
-              >
-                <div className="relative h-48 overflow-hidden rounded-t-lg">
-                  <img
-                    src={nft.image}
-                    alt={nft.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{nft.name}</h3>
-                  <p className="text-slate-400 mb-4">{nft.description}</p>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">Donor</span>
-                      <span className="font-medium">{nft.donorName}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">Blood Type</span>
-                      <span className="font-medium">{nft.bloodType}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">Location</span>
-                      <span className="font-medium">{nft.location}</span>
-                    </div>
-                  </div>
-                  <div className="mt-6 flex justify-between items-center">
-                    <span className="text-2xl font-bold text-gradient">{nft.price}</span>
-                    <button
-                      onClick={() => handleContactDonor(nft.donorName)}
-                      className="modern-button"
-                    >
-                      Contact Donor
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
+              <NFTCard key={nft.id} nft={nft} />
             ))}
           </div>
         ) : (
@@ -624,13 +490,8 @@ export function Explore() {
                         Posted by <span className="text-white">{request.author}</span> on {formatDate(request.date)}
                       </p>
                     </div>
-                    <div className="flex flex-col items-end">
-                      <div className="bg-slate-700 px-3 py-1 rounded text-white font-bold mb-2">
-                        {request.bloodGroup}
-                      </div>
-                      <div className="text-sm text-slate-400">
-                        {formatTimer(request.id)}
-                      </div>
+                    <div className="bg-slate-700 px-3 py-1 rounded text-white font-bold">
+                      {request.bloodGroup}
                     </div>
                   </div>
                   
@@ -668,7 +529,7 @@ export function Explore() {
                   <div className="flex justify-end">
                     <button 
                       className="bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-medium py-2 px-4 rounded transition-all"
-                      onClick={() => handleContactDonor(request.author)}
+                      onClick={() => alert(`Contact initiated with ${request.author} for ${request.bloodGroup} blood donation.`)}
                     >
                       Contact Donor
                     </button>
@@ -841,25 +702,6 @@ export function Explore() {
                   Mark as urgent
                 </label>
               </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1">Request Duration (hours)</label>
-                <select 
-                  className="w-full p-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-                  value={requestDuration}
-                  onChange={(e) => setRequestDuration(Number(e.target.value))}
-                >
-                  <option value="1">1 hour</option>
-                  <option value="2">2 hours</option>
-                  <option value="4">4 hours</option>
-                  <option value="6">6 hours</option>
-                  <option value="12">12 hours</option>
-                  <option value="24">24 hours</option>
-                </select>
-                <p className="text-sm text-slate-400 mt-1">
-                  Request will be automatically removed after this duration
-                </p>
-              </div>
             </div>
             
             <div className="flex justify-end mt-6 gap-3">
@@ -879,13 +721,6 @@ export function Explore() {
           </div>
         </div>
       )}
-
-      {/* Chat Component */}
-      <Chat
-        isOpen={isChatOpen}
-        onClose={() => setIsChatOpen(false)}
-        donorName={selectedDonor}
-      />
     </div>
   );
 }

@@ -1,52 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import NFTCard from '../components/NFTCard';
-import Chat from '../components/Chat';
-
-// Initial donation requests data
-const initialRequests = [
-  {
-    id: 1,
-    title: "Urgent A+ Blood Needed",
-    content: "My father needs A+ blood for emergency surgery at City Hospital.",
-    author: "Robert Chen",
-    bloodGroup: "A+",
-    date: "2025-03-09T14:30:00",
-    location: "City Hospital",
-    isUrgent: true
-  },
-  {
-    id: 2,
-    title: "Regular Donation Drive",
-    content: "Monthly blood donation drive at Community Center. All blood types welcome.",
-    author: "Blood Bank Association",
-    bloodGroup: "All",
-    date: "2025-03-15T10:00:00",
-    location: "Community Center",
-    isUrgent: false
-  }
-];
 
 export default function UserDashboard() {
   const [nfts, setNfts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchUsername, setSearchUsername] = useState('');
-  const [selectedDonor, setSelectedDonor] = useState(null);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [donationRequests, setDonationRequests] = useState(initialRequests);
-
-  // Format date for display
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric', 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-  };
 
   const fetchHiveTransactions = async (username) => {
     if (!username) return;
@@ -103,7 +63,7 @@ export default function UserDashboard() {
               hiveUsername: nftData.data.recipient || "Unknown",
               donorName: nftData.data.donor_name || "Unknown Donor",
               donorId: nftData.data.donor_id || "Unknown",
-              image: nftData.data.nft_metadata?.image || "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
+              image: nftData.data.nft_metadata?.image || "https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
               attributes: attributes,
               amount: amount,
               timestamp: nftData.data.donation_date || new Date().toISOString()
@@ -135,12 +95,7 @@ export default function UserDashboard() {
     }
     fetchHiveTransactions(searchUsername);
   };
-
-  const handleContactDonor = (donor) => {
-    setSelectedDonor(donor);
-    setIsChatOpen(true);
-  };
-
+    
   return (
     <div className="min-h-screen bg-slate-900 text-white p-8">
       <div className="max-w-7xl mx-auto">
@@ -179,11 +134,7 @@ export default function UserDashboard() {
         ) : nfts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {nfts.map((nft, index) => (
-              <NFTCard 
-                key={index} 
-                nft={nft} 
-                onContactDonor={handleContactDonor}
-              />
+              <NFTCard key={index} nft={nft} />
             ))}
           </div>
         ) : (
@@ -196,56 +147,6 @@ export default function UserDashboard() {
             </p>
           </div>
         )}
-
-        {/* Blood Donation Requests */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4 text-gradient">Blood Donation Requests</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {donationRequests.map(request => (
-              <motion.div
-                key={request.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 hover:border-red-500/50 transition-colors"
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white">{request.title}</h3>
-                    <p className="text-sm text-slate-400">
-                      Posted by {request.author} on {formatDate(request.date)}
-                    </p>
-                  </div>
-                  <span className="bg-slate-700 px-3 py-1 rounded text-white font-bold">
-                    {request.bloodGroup}
-                  </span>
-                </div>
-                <p className="text-slate-300 mb-4">{request.content}</p>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center text-slate-400">
-                    <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {request.location}
-                  </div>
-                  <button
-                    onClick={() => handleContactDonor(request.author)}
-                    className="modern-button"
-                  >
-                    Contact Donor
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Chat Component */}
-        <Chat
-          isOpen={isChatOpen}
-          onClose={() => setIsChatOpen(false)}
-          donorName={selectedDonor}
-        />
       </div>
     </div>
   );
