@@ -3,7 +3,7 @@
 **BloodDonorNFT** is a **Hive blockchain-powered** platform that incentivizes blood donation by rewarding donors with unique NFTs. This project seamlessly integrates **HiveAuth, Hive blockchain data reading, and Hive transaction broadcasting**, ensuring a **secure, decentralized, and transparent** blood donation ecosystem.
 
 ## Overview
-BloodDonorNFT addresses the global challenge of blood shortages by leveraging **Hive blockchain** for immutable donation verification and NFT-based rewards. Hospitals validate donations, and donors receive **Hive-backed digital certificates (NFTs)** that can later be redeemed for benefits.
+BloodDonorNFT addresses the global challenge of blood shortages by leveraging **Hive blockchain** for immutable donation verification and NFT-based rewards. Hospitals validate donations, and donors receive **Hive-backed digital certificates (NFTs)** that can later be redeemed for benefits, including educational courses through our integrated GyaanFT platform.
 
 ## Hive Blockchain Integration
 
@@ -33,7 +33,7 @@ BloodDonorNFT fully utilizes the **Hive blockchain** for:
 
 ### GyaanFT Integration
 ![GyaanFT Integration](/photos/GyaanFT2.png)
-*Integration with GyaanFT showcasing educational aspects of the platform*
+*The educational rewards platform where students can redeem courses using their blood donation NFTs*
 
 ### GyaanFT Interface
 ![GyaanFT Interface](/photos/gyaanft1.png)
@@ -51,12 +51,13 @@ GyaanFT is an educational platform integrated with our ecosystem, focusing on kn
 
 #### LifeNFT Integration
 ![LifeNFT Integration](/photos/LifeNFT1.png)
-*Integration between LifeNFT and GyaanFT platforms, demonstrating seamless user experience*
+*Seamless integration between blood donation NFTs and educational course redemption*
 
 ## Features
 - **Multi-Role System** – Separate dashboards for **government agencies, hospitals, and blood donors**
 - **Blockchain Verification** – Transparent and secure recording of donation history on **Hive blockchain**
 - **NFT Rewards** – Donors receive **Hive-based digital certificates** as NFTs
+- **Educational Benefits** – Students can redeem their blood donation NFTs for educational courses through GyaanFT
 - **Donation Tracking** – Complete donation history stored and verified via **Hive blockchain**
 - **Hospital Management** – Government agencies can **approve and oversee hospitals**
 - **Mobile Responsive** – Fully optimized for all devices
@@ -143,7 +144,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Contact
 
-- Email: shadowspark243@gmail.com
+- Email: arifakhtar902@gmail.com
 
 ## Acknowledgments
 
