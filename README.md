@@ -27,10 +27,6 @@ BloodDonorNFT fully utilizes the **Hive blockchain** for:
 ![Hospital Dashboard](/photos/img3.png)
 *The hospital interface for managing donations and verifying donors*
 
-### LifeNFT Platform
-![LifeNFT Platform](/photos/LifeNFT1.png)
-*Overview of the LifeNFT platform's main features and interface*
-
 ### GyaanFT Integration
 ![GyaanFT Integration](/photos/GyaanFT2.png)
 *The educational rewards platform where students can redeem courses using their blood donation NFTs*
@@ -39,17 +35,7 @@ BloodDonorNFT fully utilizes the **Hive blockchain** for:
 ![GyaanFT Interface](/photos/gyaanft1.png)
 *Detailed view of the GyaanFT educational platform interface*
 
-## GyaanFT Project
-
-GyaanFT is an educational platform integrated with our ecosystem, focusing on knowledge sharing and learning through blockchain technology.
-
-### GyaanFT Screenshots
-
-#### Main Platform View
-![GyaanFT Platform](/photos/GyaanFT2.png)
-*The main interface of GyaanFT showcasing its educational features and user dashboard*
-
-#### LifeNFT Integration
+### LifeNFT Integration
 ![LifeNFT Integration](/photos/LifeNFT1.png)
 *Seamless integration between blood donation NFTs and educational course redemption*
 
@@ -134,9 +120,6 @@ This model ensures financial sustainability while keeping the platform beneficia
 - Redeem NFT rewards
 
 
-## Contributing
-
-We welcome contributions to the BloodDonorNFT project. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to make contributions.
 
 ## License
 
